@@ -18,10 +18,9 @@ zuul:
     connect-timeout-millis: 60000
   forceOriginalQueryStringEncoding: true
   routes:
-    uac-route:
+    user-route:
       path: /user/**
-      sensitiveHeaders:
-      #      strip-prefix: false
+      sensitiveHeaders: 
       service-id: shopmall-cloud-provider-user
       ribbon:
         eager-load:
@@ -32,3 +31,15 @@ zuul:
         ConnectTimeout: 10000
         ReadTimeout: 10000
 
+security:
+  oauth2:
+    client:
+      clientId: shopmall-client-zuulgateway
+      clientSecret: shopmallClientSecret
+      access-token-uri: http://127.0.0.1:7979/user/oauth/token
+      user-authorization-uri: http://127.0.0.1:7979/user/oauth/authorize
+    resource:
+      user-info-uri: http://127.0.0.1:7979/user/user
+      prefer-token-info: false
+      jwt:
+        key-uri: http://127.0.0.1:8000/oauth/token_key
