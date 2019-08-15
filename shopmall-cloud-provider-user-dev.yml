@@ -11,3 +11,16 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/mallcloud?characterEncoding=utf8&useSSL=false&serverTimezone=UTC
     username: root
     password:
+    
+security:
+  oauth2:
+    client:
+      clientId: shopmall-client-user
+      clientSecret: shopmallClientSecret
+      access-token-uri: http://127.0.0.1:7979/user/oauth/token
+      user-authorization-uri: http://127.0.0.1:7979/user/oauth/authorize
+    resource:
+      user-info-uri: http://127.0.0.1:7979/uac/user
+      prefer-token-info: false
+      jwt:
+        key-uri: http://127.0.0.1:8000/oauth/token_key
