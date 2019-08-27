@@ -12,15 +12,36 @@ spring:
     username: root
     password:
     
-#security:
-#  oauth2:
-#    client:
-#      clientId: shopmall-client-user
-#      clientSecret: shopmallClientSecret
-#      access-token-uri: http://127.0.0.1:7979/user/oauth/token
- #     user-authorization-uri: http://127.0.0.1:7979/user/oauth/authorize
-#    resource:
-#      user-info-uri: http://127.0.0.1:7979/uac/user
-#      prefer-token-info: false
-#      jwt:
- #       key-uri: http://127.0.0.1:8000/oauth/token_key
+security:
+  oauth2:
+    client:
+      clientId: shopmall-client-user
+      clientSecret: shopmallClientSecret
+      access-token-uri: http://127.0.0.1:8000/oauth/token
+      user-authorization-uri: http://127.0.0.1:8000/oauth/authorize
+    resource:
+      id: shopmall-resource-user
+      filter-order: 3
+
+
+
+shopmall:
+  enableSqlLogInterceptor: false
+  token:
+    interceptor:
+      enable: true
+  oauth2:
+    jwtSigningKey: shopmall
+    client:
+      id: ${security.oauth2.resource.id}
+      accessTokenUrl: ${security.oauth2.client.access-token-uri}
+      clientId: ${security.oauth2.client.clientId}
+      clientSecret: ${security.oauth2.client.clientSecret}
+      clientAuthenticationScheme: header  
+    oauth2:
+      tokenStore: jwt
+      clients[0]:
+        clientId: shopmall-client-user
+        clientSecret: shopmallClientSecret
+        accessTokenValidateSeconds: 7200
+        scope: "*"    
